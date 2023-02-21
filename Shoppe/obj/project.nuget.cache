@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "P9Mi5deQQSbYEGAWDKNNTNNxrgP4l04UI6hVjRiDIO/UVFiNzaNldTBY0+fDmadc8Gy081GVLvMtl/C3gYXE4w==",
+  "success": true,
+  "projectFilePath": "D:\\Hoc online\\TTTN\\t\\Shoppe\\Shoppe.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\haian\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\haian\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\haian\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\haian\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\haian\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\haian\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -26,17 +26,17 @@ namespace Shopee.Controllers
 
                 if (user.Role == 1)
                 {
-                    
+                    return Ok(user.Role);
                 }
                 else if (user.Role == 2)
                 {
-
+                    return Ok(user.Role);
                 }
                 else
                 {
+                    return Ok(user.Role);
 
                 }
-                return Ok(user);
             }
             catch (Exception)
             {

@@ -21,7 +21,7 @@ namespace Shopee.Controllers
 
                 if (user == null)
                 {
-                    return NotFound("Your username or password are wrong!");
+                    return NotFound("Your username or password are wrong! Please check your information");
                 }
 
                 if (user.Role == 1)

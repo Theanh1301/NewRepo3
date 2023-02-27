@@ -18,7 +18,7 @@ namespace Shopee.Controllers
 
             if (user != null)
             {
-                return BadRequest("User is exist!");
+                return BadRequest("Username is exist!");
             }
             else
             {

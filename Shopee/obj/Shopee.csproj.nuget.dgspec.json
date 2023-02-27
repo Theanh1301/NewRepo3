@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Hoc online\\TTTN\\Shopee2\\Shopee\\Shopee.csproj": {}
+    "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\Shopee.csproj": {}
   },
   "projects": {
-    "D:\\Hoc online\\TTTN\\Shopee2\\Shopee\\Shopee.csproj": {
+    "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\Shopee.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Hoc online\\TTTN\\Shopee2\\Shopee\\Shopee.csproj",
+        "projectUniqueName": "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\Shopee.csproj",
         "projectName": "Shopee",
-        "projectPath": "D:\\Hoc online\\TTTN\\Shopee2\\Shopee\\Shopee.csproj",
-        "packagesPath": "C:\\Users\\haian\\.nuget\\packages\\",
-        "outputPath": "D:\\Hoc online\\TTTN\\Shopee2\\Shopee\\obj\\",
+        "projectPath": "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\Shopee.csproj",
+        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\haian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -65,8 +65,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -78,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

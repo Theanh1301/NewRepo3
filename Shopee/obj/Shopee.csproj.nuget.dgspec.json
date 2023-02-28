@@ -1,28 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\Shopee.csproj": {}
+    "D:\\Intern_NashTech\\Shopee2\\Shopee\\Shopee.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\Shopee.csproj": {
+    "D:\\Intern_NashTech\\Shopee2\\Shopee\\Shopee.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\Shopee.csproj",
+        "projectUniqueName": "D:\\Intern_NashTech\\Shopee2\\Shopee\\Shopee.csproj",
         "projectName": "Shopee",
-        "projectPath": "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\Shopee.csproj",
-        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Acer\\source\\repos\\NewRepo3\\123\\Shopee\\obj\\",
+        "projectPath": "D:\\Intern_NashTech\\Shopee2\\Shopee\\Shopee.csproj",
+        "packagesPath": "C:\\Users\\T490\\.nuget\\packages\\",
+        "outputPath": "D:\\Intern_NashTech\\Shopee2\\Shopee\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\T490\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "net6.0": {
@@ -65,7 +64,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -77,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -4,6 +4,12 @@ using Shopee.Models;
 
 namespace Shopee.Controllers
 {
+    public class LoginModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
@@ -11,13 +17,13 @@ namespace Shopee.Controllers
         ShopeeDBContext context = new ShopeeDBContext();
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(LoginModel model)
         {
             try
             {
                 var user = context.Users.SingleOrDefault(
-                u => u.Username == username
-                && u.Password == password);
+                u => u.Username == model.Username
+                && u.Password == model.Password);
 
                 if (user == null)
                 {

@@ -17,6 +17,7 @@ export default function Signup() {
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [repassword, setRePassword] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [name, setName] = useState();
@@ -26,6 +27,7 @@ export default function Signup() {
     const response = await signupUser({
       username,
       password,
+      repassword,
       email,
       phone,
       name
@@ -61,6 +63,18 @@ export default function Signup() {
       label="Password"
       type="password"
       onChange={e => setPassword(e.target.value)}
+    />
+    Re Password
+    <input
+      variant="outlined"
+      margin="normal"
+      required
+
+      id="repassword"
+      name="repassword"
+      label="Re Password"
+      type="password"
+      onChange={e => setRePassword(e.target.value)}
     />
     <br/>
     Phone Number

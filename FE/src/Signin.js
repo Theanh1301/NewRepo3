@@ -9,7 +9,7 @@ function Signin() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    axios.post('https://localhost:7264/api/Login/login', { username, password })
+    axios.post('https://localhost:7264/api/Login', { username, password })
       .then(response => {
         //localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));

@@ -15,6 +15,7 @@ namespace Shopee.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            // Nguyen the anh
             try
             {
                 var products = _context.Products.ToList();

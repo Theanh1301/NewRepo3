@@ -10,13 +10,11 @@ namespace Shopee.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        ShopeeDBContext _context = new ShopeeDBContext();
+        ShopeeDBContext _context = new ShopeeDBContext();        
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<Product>> GetAll()
         {
-            //assadasa tuan--assda
-            // Nguyen the anh
             try
             {
                 var products = _context.Products.ToList();
@@ -24,64 +22,52 @@ namespace Shopee.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
             }
         }
 
-        [HttpPost("getbyname")]
-        public async Task<IActionResult> GetByName(ProductData productData)
+        [HttpGet]
+        [Route("search/{searchKey}")]
+        public async Task<ActionResult<Product>> Search(string searchKey)
         {
             try
             {
-                var products = _context.Products
-                    .Where(p => p.ProductName.Contains(productData.ProductName))
-                    .ToList();
+                if (searchKey == null) return NotFound();
 
-                if (products != null)
-                    return Ok(products);
+                var result = _context.Products
+                    .Where(p => p.ProductName.Contains(searchKey.TrimStart().TrimEnd()));
+
+                if (result.Any())
+                   return Ok(result);
                 else
                     return NotFound();
             }
             catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
             }
         }
 
-        [HttpPost("getdetailsbyid")]
-        public async Task<IActionResult> GetDetailsById(ProductData productData)
+        [HttpGet]
+        [Route("products/{id:int}")]
+        public async Task<ActionResult<Product>> GetProduct(int id)
         {
             try
             {
-                var products = _context.Products.Find(productData.ProductId);
-                if (products != null)
-                    return Ok(products);
-                else
+                var result = _context.Products.Find(id);
+
+                if (result == null) 
                     return NotFound();
+                else
+                    return result;
             }
             catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
             }
-        }
-
-        [HttpPost("getbypid")]
-        public async Task<IActionResult> GetAllByCId(ProductData productData)
-        {
-            try
-            {
-                var products = _context.Products
-                .Where(p => p.CategoryId == productData.CategoryID);
-
-                if (products != null)
-                    return Ok(products);
-                else
-                    return NotFound();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
+        }       
     } 
 }

@@ -14,7 +14,7 @@ namespace Shopee.Controllers
         ShopeeDBContext _context = new ShopeeDBContext();
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<Category>> GetAll()
         {
             try
             {
@@ -23,15 +23,17 @@ namespace Shopee.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
             }
         }
-        [HttpPost("getbyid")]
-        public async Task<IActionResult> GetById(CategoryData categoryData)
+        [HttpGet]
+        [Route("category/{id:int}")]
+        public async Task<ActionResult<Category>> GetCategory(int id)
         {
             try
             {
-                var categories = _context.Categories.Find(categoryData.CategoryId);
+                var categories = _context.Categories.Find(id);
 
                 if (categories != null)
                     return Ok(categories);
@@ -40,7 +42,8 @@ namespace Shopee.Controllers
             }
             catch (Exception)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
             }
         }
     }

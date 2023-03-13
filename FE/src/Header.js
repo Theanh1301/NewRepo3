@@ -4,6 +4,8 @@ import Signin from './Signin';
 import HomePage from './Home';
 import { Nav } from 'react-bootstrap';
 import Signup from './Signup';
+import ProductDetail from './ProductDetail'
+import ProductList from './ProductList';
 
 
 function Header() {
@@ -20,10 +22,14 @@ function Header() {
             <Nav.Link href="/Signup">Signup</Nav.Link>
         </Nav.Item>
         </Nav>
+
+        <div>-------------------------------------</div>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/Signin' element={<Signin />} />       
-          <Route path='/Signup' element={<Signup />} />       
+          <Route path='/Signup' element={<Signup />} /> 
+          <Route path='/ProductList' element={<ProductList />} /> 
+          <Route path='/Product/:id' element={<ProductDetail />} />       
         </Routes>
     </div>
   );

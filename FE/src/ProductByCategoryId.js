@@ -1,43 +1,45 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
-});
+  });
 
-function ProductList() {
+function ProductByCategoryId() {
+  const { id } = useParams();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("https://localhost:7264/api/Products")
+    fetch(`https://localhost:7264/api/Products/products/category/${id}`)
       .then((response) => response.json())
       .then((data) => setProducts(data));
-  }, []);
+  }, [id]);
+
+  if (!products) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      <h1>Product List</h1>
-      <table border="1" width="600" >
-        <thead>
+      <table border="1" width="500">
             <tr>
-                <th width="50%">Tên sản phẩm</th>
-                <th width="25%">Ảnh</th>
-                <th>Giá</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Detail</th>
             </tr>
-        </thead>
-        <tbody>
             {products.map((product) => (
                 <tr>
                     <td><a href={`/Product/${product.productId}`}>{product.productName}</a></td>
                     <td>{product.image}</td>
                     <td>{VND.format(product.unitPrice)}</td>
+                    <td>{product.details}</td>
                 </tr>
             ))}
-        </tbody>
       </table>
-      
     </div>
   );
 }
 
-export default ProductList;
+export default ProductByCategoryId;

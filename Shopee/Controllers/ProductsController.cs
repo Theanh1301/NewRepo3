@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shopee.Data;
 using Shopee.Models;
 
@@ -68,6 +69,25 @@ namespace Shopee.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
             }
-        }       
+        }
+        [HttpGet]
+        [Route("products/category/{id:int}")]
+        public async Task<ActionResult<Product>> GetProductByCategoryId(int id)
+        {
+            try
+            {
+                var result = _context.Products.Where(m => m.CategoryId == id).ToList();
+
+                if (result == null)
+                    return NotFound();
+                else
+                    return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
     } 
 }

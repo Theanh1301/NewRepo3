@@ -13,16 +13,10 @@ function Header() {
   const location = useLocation();
 
   return (
-    <div className={location.pathname == '/Signin' ? 'hidden-nav' : ''}>
+    <div className={location.pathname === '/Signin' ? 'hidden-nav' : ''}>
         <Nav defaultActiveKey="/" as="ul">
         <Nav.Item as="li">
             <Nav.Link href="/">Home Page</Nav.Link>
-        </Nav.Item>
-        <Nav.Item as="li">
-            <Nav.Link href="/Signin">Signin</Nav.Link>
-        </Nav.Item>
-        <Nav.Item as="li">
-            <Nav.Link href="/Signup">Signup</Nav.Link>
         </Nav.Item>
         <Nav.Item as="li">
             <Nav.Link href="/ProductList">ProductList</Nav.Link>
@@ -30,7 +24,11 @@ function Header() {
         <Nav.Item as="li">
             <Nav.Link href="/CategoryList">CategoryList</Nav.Link>
         </Nav.Item>
+        <Nav.Item as="li" className='to-the-right'>
+            <Nav.Link href="/Signin">Signin</Nav.Link>
+        </Nav.Item>
         </Nav>
+        
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/Signin' element={<Signin />} />       

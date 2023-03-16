@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shopee.Data;
 using Shopee.Models;
@@ -10,9 +11,12 @@ namespace Shopee.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        ShopeeDBContext _context = new ShopeeDBContext();        
-
+        ShopeeDBContext _context = new ShopeeDBContext();
+    
         [HttpGet]
+        [Authorize]
+
+
         public async Task<ActionResult<Product>> GetAll()
         {
             try

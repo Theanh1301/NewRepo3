@@ -1,59 +1,42 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Shopee.Data;
-using Shopee.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Shopee.Responsitories;
+
 
 namespace Shopee.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
 
     public class LoginController : ControllerBase
     {
-        ShopeeDBContext _context = new ShopeeDBContext();
+        private readonly IAccountResponsitory accountRepos;
 
+        public LoginController(IAccountResponsitory repos)
+        {
+            accountRepos = repos;
+        }
 
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(Login login)
+        public async Task<IActionResult> Login([FromBody] UserModel userData)
         {
             try
             {
-                var userLogin = _context.Users.SingleOrDefault(
-                u => u.Username == login.Username
-                && u.Password == login.Password);
+                var result = await accountRepos.SignInAsync(userData);
 
-                if (userLogin == null)
-                {
-                    return Ok(new APIResponse
-                    {
-                        Success = false,
-                        Msg = "Username or password in-correct!"
-                    });
-                }
-                
-                return Ok(new APIResponse
-                    {
-                        Success = true,
-                        Msg = $"Login success, Username: {userLogin.Name}" +
-                        $", Name: {userLogin.Name}"+
-                        $", Email: {userLogin.Email}" +
-                        $", Phone: {userLogin.Phone}"+
-                        $", Role: {userLogin.Role}",
-                        Data = $"Token = Null"
-                });
-                
+                if (string.IsNullOrEmpty(result))
+                    return BadRequest("Invalid username or password!");
+                else
+                    return Ok(result);
             }
             catch (Exception ex)
             {
-                return Ok(ex.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   $"{ex.Message}");
             }
-
-        }      
+        }
     }
+    
 }

@@ -54,7 +54,7 @@ namespace Shopee.Controllers
             {
                 try
                 {
-                    User newUser = new User()
+                    Models.User newUser = new Models.User()
                     {
                         Username = register.Username,
                         Password = register.Password,

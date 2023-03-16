@@ -27,6 +27,7 @@ namespace Shopee.Controllers
                     "Error retrieving data from the database");
             }
         }
+
         [HttpGet]
         [Route("category/{id:int}")]
         public async Task<ActionResult<Category>> GetCategory(int id)

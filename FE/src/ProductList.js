@@ -1,5 +1,3 @@
-import { colors } from "@material-ui/core";
-import { BorderVertical } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
 
 const VND = new Intl.NumberFormat('vi-VN', {

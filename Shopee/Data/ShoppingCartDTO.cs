@@ -1,6 +1,6 @@
 ﻿namespace Shopee.Data
 {
-    public class CartItem
+    public class ShoppingCartDTO
     {
         public int Sid { get; set; }
         public int? Quantity { get; set; }

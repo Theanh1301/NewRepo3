@@ -30,11 +30,7 @@ namespace Shopee.Controllers
 
                 if (userLogin == null)
                 {
-                    return Ok(new APIResponse
-                    {
-                        Success = false,
-                        Msg = "Username or password in-correct!"
-                    });
+                    return BadRequest();
                 }
                 
                 return Ok(new APIResponse

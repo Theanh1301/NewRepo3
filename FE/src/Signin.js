@@ -6,7 +6,6 @@ function Signin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
   function handleSubmit(event) {
     event.preventDefault();
     axios.post('https://localhost:7264/api/Login', { username, password })
@@ -14,8 +13,11 @@ function Signin() {
         //localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         navigate('/');
+        alert("Đăng nhập thành công");
       })
-      .catch(error => console.log(error));
+      .catch(
+        alert("Đăng nhập không thành công")
+      );
   }
 
   return (

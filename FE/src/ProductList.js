@@ -1,3 +1,5 @@
+import { colors } from "@material-ui/core";
+import { BorderVertical } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
 
 const VND = new Intl.NumberFormat('vi-VN', {
@@ -17,20 +19,31 @@ function ProductList() {
   return (
     <div>
       <h1>Product List</h1>
-      <table border="1" width="600" >
-        <thead>
+      <table border="1" width="100%" >
+        <thead align="center">
             <tr>
-                <th width="50%">Tên sản phẩm</th>
-                <th width="25%">Ảnh</th>
-                <th>Giá</th>
+                <th width="250">Name</th>
+                <th width="200">Image</th>
+                <th>Price</th>
+                <th width="120">Unit In Stock</th>
+                <th>Category</th>
+                <th>Manufacturer</th>
+                <th>Saler</th>
+                <th>Add to cart</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody align="center">
             {products.map((product) => (
                 <tr>
                     <td><a href={`/Product/${product.productId}`}>{product.productName}</a></td>
                     <td>{product.image}</td>
                     <td>{VND.format(product.unitPrice)}</td>
+                    <td>{product.unitInStock}</td>
+                    <td>{product.categoryName}</td>
+                    <td>{product.manufacturer}</td>
+                    <td>{product.saler}</td>
+                    <td><button style={{backgroundColor:'pink', borderRadius: '8px'
+                    , border:'2px solid #000080', color: 'red', fontWeight:'bold' } }>Add</button></td>
                 </tr>
             ))}
         </tbody>

@@ -14,11 +14,13 @@ namespace Shopee.Controllers
         ShopeeDBContext _context = new ShopeeDBContext();        
 
         [HttpGet]
-        public async Task<ActionResult<Product>> GetAll()
+        public async Task<ActionResult<ProductDTO>> GetAll()
         {
             try
             {
-                var products = _context.Products.ToList();
+                var products = _context.Products.Select(p => new ProductDTO() { CategoryName = p.Category.CategoryName, Saler = p.Sale.Name,
+                    ProductName = p.ProductName, Image = p.Image, UnitPrice = p.UnitPrice, ProductId = p.ProductId,
+                    UnitInStock = p.UnitInStock, Manufacturer = p.Manufacturer } ).ToList();
                 return Ok(products);
             }
             catch (Exception)

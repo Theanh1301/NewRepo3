@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shopee.Data;
 using Shopee.Models;
 
@@ -21,7 +22,9 @@ namespace Shopee.Controllers
         {
             try
             {
-                var products = _context.Products.ToList();
+                var products = _context.Products.Select(p => new ProductDTO() { CategoryName = p.Category.CategoryName, Saler = p.Sale.Name,
+                    ProductName = p.ProductName, Image = p.Image, UnitPrice = p.UnitPrice, ProductId = p.ProductId,
+                    UnitInStock = p.UnitInStock, Manufacturer = p.Manufacturer } ).ToList();
                 return Ok(products);
             }
             catch (Exception)
@@ -72,6 +75,25 @@ namespace Shopee.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
             }
-        }       
+        }
+        [HttpGet]
+        [Route("products/category/{id:int}")]
+        public async Task<ActionResult<Product>> GetProductByCategoryId(int id)
+        {
+            try
+            {
+                var result = _context.Products.Where(m => m.CategoryId == id).ToList();
+
+                if (result == null)
+                    return NotFound();
+                else
+                    return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
     } 
 }

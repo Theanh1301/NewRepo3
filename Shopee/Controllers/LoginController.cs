@@ -30,6 +30,10 @@ namespace Shopee.Controllers
                     return BadRequest("Invalid username or password!");
                 else
                     return Ok(result);
+                        $", Role: {userLogin.Role}",
+                        Data = $"Token = Null"
+                });
+                
             }
             catch (Exception ex)
             {

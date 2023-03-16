@@ -64,6 +64,7 @@ export default function Signup() {
       type="password"
       onChange={e => setPassword(e.target.value)}
     />
+    <br />
     Re Password
     <input
       variant="outlined"

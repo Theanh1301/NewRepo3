@@ -9,6 +9,13 @@ namespace Shopee.Controllers
     [ApiController]
     public class ShoppingCartController : ControllerBase
     {
+       /* public decimal GetTotal(int userId)
+        {
+            decimal? total = (from cartItems in _context.ShoppingCarts
+                              where cartItems.ProductId == userId
+                              select (int?)cartItems.Quantity * cartItems.Product.UnitPrice).Sum();
+            return total ?? 0;
+        }*/
         ShopeeDBContext _context = new ShopeeDBContext();
         [HttpGet]
         [Route("ShoppingCart/{id:int}")]
@@ -40,6 +47,7 @@ namespace Shopee.Controllers
         }
 
         [HttpPost]
+        [Route("Add")]
         public async Task<ActionResult<ShoppingCart>> AddToCart(int productId, int quantity, int userId)
         {
             
@@ -63,7 +71,7 @@ namespace Shopee.Controllers
                     shoppingCart.Quantity += quantity;
                 }
                 _context.SaveChanges();
-                return Ok();
+                return Ok("Add To Cart Success!");
             }
             catch (Exception)
             {
@@ -90,7 +98,7 @@ namespace Shopee.Controllers
                     _context.ShoppingCarts.Remove(shoppingCart);
                 }              
                 _context.SaveChanges();
-                return Ok();
+                return Ok("Remove Item Success!");
             }
             catch (Exception)
             {
@@ -111,7 +119,7 @@ namespace Shopee.Controllers
 
                 _context.ShoppingCarts.Remove(shoppingCart);
                 _context.SaveChanges();
-                return Ok();
+                return Ok("Remove Item Success!");
             }
             catch (Exception)
             {

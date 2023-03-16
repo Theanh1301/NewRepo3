@@ -8,6 +8,11 @@ function Signin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  function navigateToSignup(){
+    navigate('/Signup');
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     axios.post('https://localhost:7264/api/Login', { username, password })
@@ -30,7 +35,7 @@ function Signin() {
       <input type="text" placeholder="username"  value={username} onChange={event => setUsername(event.target.value)}/>
       <input type="password" placeholder="password" value={password} onChange={event => setPassword(event.target.value)}/>
       <button type='submit'>login</button>
-      <p className="message">Not registered? <a href="#">Create an account</a></p>
+      <p className="message">Not registered? <a href="#" onClick={() => navigateToSignup()}>Create an account</a></p>
     </form>
   </div>
 </div>

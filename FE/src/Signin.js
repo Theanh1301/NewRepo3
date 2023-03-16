@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Signin.css';
+import { Container } from 'react-bootstrap';
 
 function Signin() {
   const [username, setUsername] = useState('');
@@ -21,19 +23,31 @@ function Signin() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input type="text" value={username} onChange={event => setUsername(event.target.value)} />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input type="password" value={password} onChange={event => setPassword(event.target.value)} />
-      </label>
-      <br />
-      <button type="submit">Login</button>
+<div className='login-container'>
+  <div className='login-page'>
+  <div className='form'>
+    <form className='login-form'  onSubmit={handleSubmit}>
+      <input type="text" placeholder="username"  value={username} onChange={event => setUsername(event.target.value)}/>
+      <input type="password" placeholder="password" value={password} onChange={event => setPassword(event.target.value)}/>
+      <button type='submit'>login</button>
+      <p className="message">Not registered? <a href="#">Create an account</a></p>
     </form>
+  </div>
+</div>
+</div>
+    // <form onSubmit={handleSubmit}>
+    //   <label>
+    //     Username:
+    //     <input type="text" value={username} onChange={event => setUsername(event.target.value)} />
+    //   </label>
+    //   <br />
+    //   <label>
+    //     Password:
+    //     <input type="password" value={password} onChange={event => setPassword(event.target.value)} />
+    //   </label>
+    //   <br />
+    //   <button type="submit">Login</button>
+    // </form>
   );
 }
 

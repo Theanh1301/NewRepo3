@@ -1,5 +1,5 @@
 
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route, useLocation} from 'react-router-dom';
 import Signin from './Signin';
 import HomePage from './Home';
 import { Nav } from 'react-bootstrap';
@@ -8,9 +8,12 @@ import ProductDetail from './ProductDetail'
 import ProductList from './ProductList';
 import CategoryList from './CategoryList';
 import ProductByCategoryId from './ProductByCategoryId';
+import './Header.css';
 function Header() {
+  const location = useLocation();
+
   return (
-    <div>
+    <div className={location.pathname == '/Signin' ? 'hidden-nav' : ''}>
         <Nav defaultActiveKey="/" as="ul">
         <Nav.Item as="li">
             <Nav.Link href="/">Home Page</Nav.Link>
@@ -28,8 +31,6 @@ function Header() {
             <Nav.Link href="/CategoryList">CategoryList</Nav.Link>
         </Nav.Item>
         </Nav>
-
-        <div>-------------------------------------</div>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/Signin' element={<Signin />} />       

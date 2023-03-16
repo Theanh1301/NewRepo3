@@ -29,11 +29,7 @@ namespace Shopee.Controllers
                 if (string.IsNullOrEmpty(result))
                     return BadRequest("Invalid username or password!");
                 else
-                    return Ok(result);
-                        $", Role: {userLogin.Role}",
-                        Data = $"Token = Null"
-                });
-                
+                    return Ok(result);            
             }
             catch (Exception ex)
             {

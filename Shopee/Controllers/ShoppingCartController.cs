@@ -72,7 +72,8 @@ namespace Shopee.Controllers
             }
         }
         [HttpDelete]
-        public async Task<ActionResult<ShoppingCart>> RemoveItem(int productId, int userId)
+        [Route("Remove")]
+        public async Task<ActionResult<ShoppingCart>> Remove(int productId, int userId)
         {
 
             try
@@ -88,6 +89,27 @@ namespace Shopee.Controllers
                 {
                     _context.ShoppingCarts.Remove(shoppingCart);
                 }              
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+
+        [HttpDelete]
+        [Route("RemoveAll")]
+        public async Task<ActionResult<ShoppingCart>> RemoveAll(int productId, int userId)
+        {
+
+            try
+            {
+                var shoppingCart = _context.ShoppingCarts.Where(s => s.ProductId == productId
+                && s.UserId == userId).FirstOrDefault();
+
+                _context.ShoppingCarts.Remove(shoppingCart);
                 _context.SaveChanges();
                 return Ok();
             }

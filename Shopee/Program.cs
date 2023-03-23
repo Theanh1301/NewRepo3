@@ -106,7 +106,14 @@ namespace Shopee
                     (builder.Configuration["JWT:SecretKey"]))
                 };
             });
-
+            /*builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Authorization", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    //policy.RequireClaim("Role", "api1"); // Only users with "api1" scope can access
+                });
+            });*/
             builder.Services.AddScoped<IAccountResponsitory, AccountRespository>();
 
             var app = builder.Build();

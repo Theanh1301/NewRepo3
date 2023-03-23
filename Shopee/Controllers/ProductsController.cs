@@ -18,17 +18,14 @@ namespace Shopee.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
         ShopeeDBContext _context = new ShopeeDBContext();
-    
         [HttpGet]
-        //[Authorize]
-
         public async Task<ActionResult<Product>> GetAll()
         {
             try
             {
                 var products = _context.Products.Select(p => new ProductDTO() { CategoryName = p.Category.CategoryName, Saler = p.Sale.Name,
                     ProductName = p.ProductName, Image = p.Image, UnitPrice = p.UnitPrice, ProductId = p.ProductId,
-                    UnitInStock = p.UnitInStock, Manufacturer = p.Manufacturer } ).ToList();
+                    UnitInStock = p.UnitInStock, Manufacturer = p.Manufacturer, Details = p.Details } ).ToList();
                 return Ok(products);
             }
             catch (Exception)
@@ -101,32 +98,85 @@ namespace Shopee.Controllers
         }
 
         [HttpPost]
-        [Route("products/upload")]
-        public async Task<IActionResult> OnPostUploadAsync(IFormFile file)
+        [Route("Create")]
+        public async Task<ActionResult<Product>> Create(string name, decimal price, int unitInStock
+            , string manufacturer, string image, string details, int cateId, int saleId)
         {
-
-            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "images");
-
-            if (!Directory.Exists(filePath))
+            try
             {
-                Directory.CreateDirectory(filePath);
+                Product product = new Product
+                {
+                    ProductName = name,
+                    UnitPrice = price,
+                    UnitInStock = unitInStock,
+                    Manufacturer = manufacturer,
+                    Image = image,
+                    Details = details,
+                    CategoryId = cateId,
+                    SaleId = saleId
+                };
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+                return Ok("Create Success!");
             }
-
-            var fileName = Path.GetFileName(file.Name);
-            var extension = Path.GetExtension(file.FileName);
-
-            var randomFileName = $"{fileName}-{Guid.NewGuid().ToString()}{extension}";
-            var fPath = Path.Combine(filePath, randomFileName);
-
-            using (var stream = System.IO.File.Create(fPath))
+            catch (Exception)
             {
-                await file.CopyToAsync(stream);
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
             }
+        }
 
-            // Process uploaded files
-            // Don't rely on or trust the FileName property without validation.
+        [HttpDelete]
+        [Route("Delete/{id:int}")]
+        public async Task<ActionResult<Product>> Delete(int id)
+        {
+            try
+            {
+                var product = _context.Products.Find(id);
+                if (product == null)
+                    return NotFound();
+                else
+                    _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+                return Ok("Remove success");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
 
-            return Ok(new { randomFileName });
+        [HttpPost]
+        [Route("Edit/{id:int}")]
+        public async Task<ActionResult<Product>> Edit(int id, string name, decimal price, int unitInStock
+            , string manufacturer, string image, string details, int cateId)
+        {
+            try
+            {
+                var product = _context.Products.Find(id);
+                if (product == null)
+                    return NotFound();
+                else
+                {
+                    product.ProductName = name;
+                    product.UnitPrice = price;
+                    product.UnitInStock = unitInStock;
+                    product.Manufacturer = manufacturer;
+                    product.Image = image;
+                    product.Details = details;
+                    product.CategoryId = cateId;
+                }
+                _context.Products.Update(product);
+                await _context.SaveChangesAsync();
+
+                return Ok("Edit success");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
         }
     } 
 }

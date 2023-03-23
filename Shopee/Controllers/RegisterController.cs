@@ -10,45 +10,29 @@ namespace Shopee.Controllers
     [ApiController]
     public class RegisterController : ControllerBase
     {
-        Validation validation = new Validation();
-        ShopeeDBContext context = new ShopeeDBContext();
+        Validation _validation = new Validation();
+        ShopeeDBContext _context = new ShopeeDBContext();
 
         [HttpPost]
         public async Task<IActionResult> Register(Register register)
         {
-            var user = context.Users.SingleOrDefault(u => u.Username == register.Username);
+            var user = _context.Users.SingleOrDefault(u => u.Username == register.Username);
 
             if (user != null)
             {
-                return Ok(new APIResponse
-                {
-                    Success = false,
-                    Msg = $"Username already exist!"
-                });
+                return BadRequest();
             }
             else if (!register.Password.Equals(register.RePassword))
             {
-                return Ok(new APIResponse
-                {
-                    Success = false,
-                    Msg = $"Password and re-password are not same!"
-                });
+                return BadRequest();
             }
-            else if (!validation.IsEmail(register.Email))
+            else if (!_validation.IsEmail(register.Email))
             {
-                return Ok(new APIResponse
-                {
-                    Success = false,
-                    Msg = $"Email {register.Email} is not true!"
-                });
+                return BadRequest();
             }
-            else if (!validation.IsNumber(register.Phone))
+            else if (!_validation.IsNumber(register.Phone))
             {
-                return Ok(new APIResponse
-                {
-                    Success = false,
-                    Msg = $"Phone must be digit and 10 digit!"
-                });
+                return BadRequest();
             }
             else
             {
@@ -64,14 +48,10 @@ namespace Shopee.Controllers
                         Role = 3
                     };
 
-                    context.Users.Add(newUser);
-                    context.SaveChanges();
+                    _context.Users.Add(newUser);
+                    await _context.SaveChangesAsync();
 
-                    return Ok(new APIResponse
-                    {
-                        Success = true,
-                        Msg = $"Register Success, Hello Mr/Mrs {newUser.Name}"
-                    });
+                    return Ok();
                 }
                 catch (Exception)
                 {

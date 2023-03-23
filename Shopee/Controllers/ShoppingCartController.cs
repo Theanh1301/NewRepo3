@@ -9,13 +9,6 @@ namespace Shopee.Controllers
     [ApiController]
     public class ShoppingCartController : ControllerBase
     {
-       /* public decimal GetTotal(int userId)
-        {
-            decimal? total = (from cartItems in _context.ShoppingCarts
-                              where cartItems.ProductId == userId
-                              select (int?)cartItems.Quantity * cartItems.Product.UnitPrice).Sum();
-            return total ?? 0;
-        }*/
         ShopeeDBContext _context = new ShopeeDBContext();
         [HttpGet]
         [Route("ShoppingCart/{id:int}")]
@@ -23,21 +16,16 @@ namespace Shopee.Controllers
         {
             try
             {
-                var cart = _context.ShoppingCarts.Where(s => s.UserId == id).FirstOrDefault();
-                if (cart == null)
-                    return NotFound();
-                else
+                var shoppingCart = _context.ShoppingCarts.Select(s => new ShoppingCartDTO()
                 {
-                    var shoppingCart = _context.ShoppingCarts.Select(s => new ShoppingCartDTO()
-                    {
-                        Sid = s.Sid,
-                        ProductName = s.Product.ProductName,
-                        Name = s.User.Name,
-                        Quantity = s.Quantity,
-                        TotalPrice = (decimal)((decimal)s.Quantity * s.Product.UnitPrice)
-                    }).ToList();
-                    return Ok(shoppingCart);
-                }                              
+                    Sid = s.Sid,
+                    ProductName = s.Product.ProductName,
+                    Name = s.User.Name,
+                    Quantity = s.Quantity,
+                    TotalPrice = (decimal)((decimal)s.Quantity * s.Product.UnitPrice),
+                    UserId = s.UserId,  
+                }).Where(s => s.UserId == id).ToList();
+                return Ok(shoppingCart);
             }
             catch (Exception)
             {
@@ -70,7 +58,7 @@ namespace Shopee.Controllers
                 {
                     shoppingCart.Quantity += quantity;
                 }
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return Ok("Add To Cart Success!");
             }
             catch (Exception)
@@ -86,18 +74,18 @@ namespace Shopee.Controllers
 
             try
             {
-                var shoppingCart = _context.ShoppingCarts.Where(s => s.ProductId == productId
+                var cartItem = _context.ShoppingCarts.Where(s => s.ProductId == productId
                 && s.UserId == userId).FirstOrDefault();
 
-                if (shoppingCart.Quantity > 1)
+                if (cartItem.Quantity > 1)
                 {
-                    shoppingCart.Quantity -= 1;
+                    cartItem.Quantity -= 1;
                 }
                 else
                 {
-                    _context.ShoppingCarts.Remove(shoppingCart);
+                    _context.ShoppingCarts.Remove(cartItem);
                 }              
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return Ok("Remove Item Success!");
             }
             catch (Exception)
@@ -114,11 +102,11 @@ namespace Shopee.Controllers
 
             try
             {
-                var shoppingCart = _context.ShoppingCarts.Where(s => s.ProductId == productId
+                var cartItem = _context.ShoppingCarts.Where(s => s.ProductId == productId
                 && s.UserId == userId).FirstOrDefault();
 
-                _context.ShoppingCarts.Remove(shoppingCart);
-                _context.SaveChanges();
+                _context.ShoppingCarts.Remove(cartItem);
+                await _context.SaveChangesAsync();
                 return Ok("Remove Item Success!");
             }
             catch (Exception)

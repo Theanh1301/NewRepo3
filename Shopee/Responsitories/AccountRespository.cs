@@ -35,11 +35,12 @@ namespace Shopee.Responsitories
             {
                  new Claim(JwtRegisteredClaimNames.Sub, _configuration["JWT:Subject"]),
                  new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                 new Claim(ClaimTypes.Role, user.Role.ToString()),
-                 new Claim(ClaimTypes.Email, user.Email),
-                 new Claim(ClaimTypes.MobilePhone, user.Phone.ToString()),
-                 new Claim(ClaimTypes.Name, user.Name),
+                 new Claim("Role", user.Role.ToString()),
+                 new Claim("Email", user.Email),
+                 new Claim("Phone", user.Phone.ToString()),
+                 new Claim("Name", user.Name),
                  new Claim("Username", userData.Username),
+                 new Claim("Id", user.Id.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecretKey"]));

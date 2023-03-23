@@ -12,6 +12,11 @@ namespace Shopee.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private Microsoft.AspNetCore.Hosting.IWebHostEnvironment _hostingEnvironment;
+        public ProductsController(Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         ShopeeDBContext _context = new ShopeeDBContext();
         [HttpGet]
         public async Task<ActionResult<Product>> GetAll()

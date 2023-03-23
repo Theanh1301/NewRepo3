@@ -23,7 +23,7 @@ function Signin() {
         alert("Đăng nhập thành công");
       })
       .catch(
-        alert("Đăng nhập không thành công")
+        //alert("Đăng nhập không thành công")
       );
   }
 

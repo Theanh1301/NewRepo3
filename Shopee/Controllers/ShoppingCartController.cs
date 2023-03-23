@@ -16,16 +16,17 @@ namespace Shopee.Controllers
         {
             try
             {
-                var shoppingCart = _context.ShoppingCarts.Select(s => new ShoppingCartDTO()
-                {
-                    Sid = s.Sid,
-                    ProductName = s.Product.ProductName,
-                    Name = s.User.Name,
-                    Quantity = s.Quantity,
-                    TotalPrice = (decimal)((decimal)s.Quantity * s.Product.UnitPrice),
-                    UserId = s.UserId,  
-                }).Where(s => s.UserId == id).ToList();
-                return Ok(shoppingCart);
+                    var shoppingCart = _context.ShoppingCarts.Select(s => new ShoppingCartDTO()
+                    {
+                        Sid = s.Sid,
+                        ProductName = s.Product.ProductName,
+                        Name = s.User.Name,
+                        Quantity = s.Quantity,
+                        UserId =s.UserId,
+                        TotalPrice = (decimal)((decimal)s.Quantity * s.Product.UnitPrice)
+                    }).Where(s => s.UserId == id).ToList();
+                    return Ok(shoppingCart);
+                                       
             }
             catch (Exception)
             {

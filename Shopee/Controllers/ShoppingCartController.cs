@@ -37,27 +37,27 @@ namespace Shopee.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<ActionResult<ShoppingCart>> AddToCart(int productId, int quantity, int userId)
+        public async Task<ActionResult<ShoppingCart>> AddToCart([FromBody] CartModel cm)
         {
             
             try
             {
-                var shoppingCart = _context.ShoppingCarts.Where(s => s.ProductId == productId 
-                && s.UserId == userId).FirstOrDefault();
+                var shoppingCart = _context.ShoppingCarts.Where(s => s.ProductId == cm.ProductId 
+                && s.UserId == cm.UserId).FirstOrDefault();
 
                 if (shoppingCart == null)
                 {
                     shoppingCart = new ShoppingCart
                     {
-                        UserId = userId,
-                        ProductId = productId,
-                        Quantity = quantity,
+                        UserId = cm.UserId,
+                        ProductId = cm.ProductId,
+                        Quantity = cm.Quantity,
                     };
                     _context.ShoppingCarts.Add(shoppingCart);
                 }
                 else
                 {
-                    shoppingCart.Quantity += quantity;
+                    shoppingCart.Quantity += cm.Quantity;
                 }
                 await _context.SaveChangesAsync();
                 return Ok("Add To Cart Success!");

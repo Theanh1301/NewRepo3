@@ -18,6 +18,7 @@ namespace Shopee.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
         ShopeeDBContext _context = new ShopeeDBContext();
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<Product>> GetAll()
         {

@@ -6,7 +6,6 @@ const VND = new Intl.NumberFormat('vi-VN', {
   style: 'currency',
   currency: 'VND',
 });
-
 //decode
 function parseJwt(token) {
   if (!token) { return; }
@@ -14,23 +13,29 @@ function parseJwt(token) {
   const base64 = base64Url.replace('-', '+').replace('_', '/');
   return JSON.parse(window.atob(base64));
 }
+//add to cart
+function handleAddToCart(productId, quantity, userId) {
+  const data = {
+    "productId": productId,
+    "quantity": quantity,
+    "userId": userId
+  };
+  console.log(data)
 
-async function handleAddToCart(productId, quantity, userId) {
-  console.log(productId, quantity, userId)
   return fetch('https://localhost:7264/api/ShoppingCart/Add', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({productId, quantity, userId})
+    body: JSON.stringify(data),
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log("Success:", data);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
 }
 
@@ -40,8 +45,8 @@ function ProductList() {
   //test token
   const savedToken = JSON.parse(localStorage.getItem("token"));
   console.log('token', savedToken);
-  console.log('info', parseJwt(savedToken).Username)
 
+  //
   useEffect(() => {
     fetch("https://localhost:7264/api/Products", {
       headers: {
@@ -51,8 +56,6 @@ function ProductList() {
       .then((response) => response.json())
       .then((data) => setProducts(data));
   }, []);
-
-
 
   //table
   function Items({ currentItems }) {
@@ -77,7 +80,7 @@ function ProductList() {
               {currentItems && currentItems.map((item) => (
                 <tr key={item.productId}>
                   <td><a href={`/Product/${item.productId}`}>{item.productName}</a></td>
-                  <td><img src={`https://localhost:7264/images/`+ item.image} /></td>
+                  <td><img src={`https://localhost:7264/images/` + item.image} height="100" /></td>
                   <td>{VND.format(item.unitPrice)}</td>
                   <td>{item.unitInStock}</td>
                   <td>{item.categoryName}</td>
@@ -87,8 +90,8 @@ function ProductList() {
                     <button
                       //productId, quantity, userId
                       onClick={() => {
-                        handleAddToCart(item.productId, 1, 3);
-                        //window.location.href = '/cart';
+                        handleAddToCart(item.productId, 1, parseInt(parseJwt(savedToken).Id));
+                        window.location.href = '/cart';
                       }}
                       style={{
                         backgroundColor: 'pink', borderRadius: '8px'
@@ -107,6 +110,7 @@ function ProductList() {
     );
   }
 
+  //pagiing
   function PaginatedItems({ itemsPerPage }) {
     const [itemOffset, setItemOffset] = useState(0);
     const endOffset = itemOffset + itemsPerPage;
@@ -151,7 +155,6 @@ function ProductList() {
       </div>
     );
   }
-
 
   return (
     <div>

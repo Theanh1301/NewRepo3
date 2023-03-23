@@ -17,8 +17,7 @@ function Signin() {
     event.preventDefault();
     axios.post('https://localhost:7264/api/Login', { username, password })
       .then(response => {
-        //localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('token', JSON.stringify(response.data));
         navigate('/');
         alert("Đăng nhập thành công");
       })

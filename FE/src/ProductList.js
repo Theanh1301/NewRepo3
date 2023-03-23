@@ -13,6 +13,7 @@ function parseJwt(token) {
   const base64 = base64Url.replace('-', '+').replace('_', '/');
   return JSON.parse(window.atob(base64));
 }
+
 //add to cart
 function handleAddToCart(productId, quantity, userId) {
   const data = {
@@ -29,13 +30,17 @@ function handleAddToCart(productId, quantity, userId) {
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      response.json()
+      window.location.href = '/cart';
+    })
     .then((data) => {
       console.log("Success:", data);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
+
 
 }
 
@@ -91,7 +96,6 @@ function ProductList() {
                       //productId, quantity, userId
                       onClick={() => {
                         handleAddToCart(item.productId, 1, parseInt(parseJwt(savedToken).Id));
-                        window.location.href = '/cart';
                       }}
                       style={{
                         backgroundColor: 'pink', borderRadius: '8px'

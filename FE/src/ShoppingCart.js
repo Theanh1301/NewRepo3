@@ -40,7 +40,7 @@ function ShoppingCart() {
         </thead>
         <tbody align="center">
           {products && products.map((item) => (
-            <tr key={item.productId}>
+            <tr key={item.sid}>
               <td>{item.productName}</td>
               <td>{item.quantity}</td>
               <td>{VND.format(item.totalPrice / item.quantity)}</td>

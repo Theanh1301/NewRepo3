@@ -33,7 +33,10 @@ function handleAddToCart(productId, quantity, userId) {
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      response.json()
+      window.location.href = '/cart';
+    })
     .then((data) => {
       console.log("Success:", data);
     })
@@ -95,7 +98,6 @@ function ProductDetail() {
       <h3>Manufacturer: {product.manufacturer}</h3>
       <button onClick={ () => {
         handleAddToCart(product.productId, 1, parseInt(parseJwt(savedToken).Id))
-        window.location.href = '/cart'
       }
       }>Add to Cart</button>
 

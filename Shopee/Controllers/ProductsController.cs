@@ -12,11 +12,15 @@ namespace Shopee.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private Microsoft.AspNetCore.Hosting.IWebHostEnvironment _hostingEnvironment;
+        public ProductsController(Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         ShopeeDBContext _context = new ShopeeDBContext();
     
         [HttpGet]
-        [Authorize]
-
+        //[Authorize]
 
         public async Task<ActionResult<Product>> GetAll()
         {
@@ -94,6 +98,35 @@ namespace Shopee.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
             }
+        }
+
+        [HttpPost]
+        [Route("products/upload")]
+        public async Task<IActionResult> OnPostUploadAsync(IFormFile file)
+        {
+
+            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+
+            var fileName = Path.GetFileName(file.Name);
+            var extension = Path.GetExtension(file.FileName);
+
+            var randomFileName = $"{fileName}-{Guid.NewGuid().ToString()}{extension}";
+            var fPath = Path.Combine(filePath, randomFileName);
+
+            using (var stream = System.IO.File.Create(fPath))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            return Ok(new { randomFileName });
         }
     } 
 }

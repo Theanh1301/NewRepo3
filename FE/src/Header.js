@@ -9,6 +9,8 @@ import ProductList from './ProductList';
 import CategoryList from './CategoryList';
 import ProductByCategoryId from './ProductByCategoryId';
 import './Header.css';
+import ShoppingCart from './ShoppingCart';
+
 function Header() {
   const location = useLocation();
 
@@ -25,7 +27,10 @@ function Header() {
             <Nav.Link href="/CategoryList">CategoryList</Nav.Link>
         </Nav.Item>
         <Nav.Item as="li" className='to-the-right'>
-            <Nav.Link href="/Signin">Signin</Nav.Link>
+          <Nav.Link href="/cart">Cart</Nav.Link>
+        </Nav.Item>
+        <Nav.Item as="li" className='to-the-right'>
+          <Nav.Link href="/Signin">Signin</Nav.Link>
         </Nav.Item>
         </Nav>
         
@@ -36,7 +41,9 @@ function Header() {
           <Route path='/ProductList' element={<ProductList />} /> 
           <Route path='/Product/:id' element={<ProductDetail />} />  
           <Route path='/CategoryList' element={<CategoryList />} />      
-          <Route path='/Category/:id' element={<ProductByCategoryId />} />    
+          <Route path='/Category/:id' element={<ProductByCategoryId />} />   
+          <Route path='/cart' element={<ShoppingCart />} /> 
+          
         </Routes>
     </div>
   );

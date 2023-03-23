@@ -23,21 +23,17 @@ namespace Shopee.Controllers
         {
             try
             {
-                var cart = _context.ShoppingCarts.Where(s => s.UserId == id).FirstOrDefault();
-                if (cart == null)
-                    return NotFound();
-                else
-                {
                     var shoppingCart = _context.ShoppingCarts.Select(s => new ShoppingCartDTO()
                     {
                         Sid = s.Sid,
                         ProductName = s.Product.ProductName,
                         Name = s.User.Name,
                         Quantity = s.Quantity,
+                        UserId =s.UserId,
                         TotalPrice = (decimal)((decimal)s.Quantity * s.Product.UnitPrice)
-                    }).ToList();
+                    }).Where(s => s.UserId == id).ToList();
                     return Ok(shoppingCart);
-                }                              
+                                       
             }
             catch (Exception)
             {

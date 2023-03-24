@@ -19,6 +19,7 @@ namespace Shopee.Controllers
                     var shoppingCart = _context.ShoppingCarts.Select(s => new ShoppingCartDTO()
                     {
                         Sid = s.Sid,
+                        ProductId = s.ProductId,
                         ProductName = s.Product.ProductName,
                         Name = s.User.Name,
                         Quantity = s.Quantity,
@@ -98,13 +99,13 @@ namespace Shopee.Controllers
 
         [HttpDelete]
         [Route("RemoveAll")]
-        public async Task<ActionResult<ShoppingCart>> RemoveAll(int productId, int userId)
+        public async Task<ActionResult<ShoppingCart>> RemoveAll([FromBody] CartModel cm)
         {
 
             try
             {
-                var cartItem = _context.ShoppingCarts.Where(s => s.ProductId == productId
-                && s.UserId == userId).FirstOrDefault();
+                var cartItem = _context.ShoppingCarts.Where(s => s.ProductId == cm.ProductId
+                && s.UserId == cm.UserId).FirstOrDefault();
 
                 _context.ShoppingCarts.Remove(cartItem);
                 await _context.SaveChangesAsync();

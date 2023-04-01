@@ -69,6 +69,33 @@ namespace Shopee.Controllers
                     "Error retrieving data from the database");
             }
         }
+        [HttpPut]
+        [Route("ChangeQuantity")]
+        public async Task<ActionResult<ShoppingCart>> ChangeQuantity([FromBody] CartModel cm)
+        {
+
+            try
+            {
+                var cartItem = _context.ShoppingCarts.Where(s => s.ProductId == cm.ProductId
+                && s.UserId == cm.UserId).FirstOrDefault();
+
+                if (cm.Quantity >= 1)
+                {
+                    cartItem.Quantity = cm.Quantity;
+                }
+                else
+                {
+                    _context.ShoppingCarts.Remove(cartItem);
+                }
+                await _context.SaveChangesAsync();
+                return Ok("Change Quantity Item Success!");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
         [HttpDelete]
         [Route("Remove")]
         public async Task<ActionResult<ShoppingCart>> Remove(int productId, int userId)
